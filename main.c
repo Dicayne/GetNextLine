@@ -5,52 +5,39 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 14:34:54 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/19 16:59:43 by vmoreau          ###   ########.fr       */
+/*   Created: 2019/11/19 17:00:43 by vmoreau           #+#    #+#             */
+/*   Updated: 2019/11/20 19:32:34 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <unistd.h>
-#include <fcntl.h>
-
-char	*buf_work(int fd)
-{
-	char *line;
-	int ret;
-	
-	line = NULL;
-	ret = read(fd, line, 1);
-	return (line);
-}
-
-int		stop(char *buf)
-{
-	int i;
-
-	i = 0;
-	if (buf != NULL)
-	{
-		while (buf[i] != '\0')
-		{
-			if (buf[i] == '\n')
-				return (1);
-			i++;
-		}
-	}
-	return (0);
-}
 
 int		main(void)
 {
-	int fd;
-	char *str;
-	fd = open("test.txt", S_IRWXU);
-	str = NULL;
-	while (stop(str) == 0)
+	int		fd;
+	char	*str;
+	int		ret;
+
+	ret = 1;
+	fd = open("test.txt", O_RDONLY);
+	// ret = get_next_line(fd, &str);
+	// printf("TATA:%s\n\n%d\n", str, ret);
+	// ret = get_next_line(fd, &str);
+	// printf("TiTA:%s\n\n%d\n", str, ret);
+	// ret = get_next_line(fd, &str);
+	// printf("TiTA:%s\n\n%d\n", str, ret);
+	// ret = get_next_line(fd, &str);
+	// printf("TiTA:%s\n\n%d\n", str, ret);
+	// ret = get_next_line(fd, &str);
+	// printf("TiTA:%s\n\n%d\n", str, ret);
+	// ret = get_next_line(fd, &str);
+	// printf("TiTA:%s\n\n%d\n", str, ret);
+	// ret = get_next_line(fd, &str);
+	// printf("TiTA:%s\n\n%d\n", str, ret);
+	while (ret > 0)
 	{
-		str = buf_work(fd);
-		printf("%s", str);
+		ret = get_next_line(fd, &str);
+		printf("%s\n",str);
 	}
 	return (0);
 }
