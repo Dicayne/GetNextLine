@@ -6,7 +6,7 @@
 /*   By: vmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:13 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/20 19:17:48 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/11/21 18:42:32 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int		ft_strlen(char *str)
 	int i;
 
 	i = 0;
+	if (str == NULL)
+		return (0);
 	while (str[i] != '\0')
 		i++;
 	return (i);
@@ -51,13 +53,15 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (join);
 }
 
-char	*ft_take_end(char *str)
+char	*ft_take_end(char *str, int ret)
 {
-	int len;
-	int i;
-	char *end_str;
+	int		len;
+	int		i;
+	char	*end_str;
 
 	i = 0;
+	if (ret == 0)
+		return (NULL);
 	while (str[i] != '\n')
 		i++;
 	len = ft_strlen(str + i);
@@ -75,4 +79,27 @@ char	*ft_take_end(char *str)
 		end_str[len] = '\0';
 	}
 	return (end_str);
+}
+
+char	*ft_cut_end(char *str)
+{
+	int		len;
+	int		i;
+	char	*tmp;
+
+	len = 0;
+	i = 0;
+	while (str[len] != '\n' && str[len] != '\0')
+		len++;
+	tmp = (char *)malloc(sizeof(char) * (len + 1));
+	if (tmp != NULL)
+	{
+		while (i < len)
+		{
+			tmp[i] = str[i];
+			i++;
+		}
+		tmp[i] = '\0';
+	}
+	return (tmp);
 }
