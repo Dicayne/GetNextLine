@@ -6,7 +6,7 @@
 /*   By: vmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:19 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/22 14:44:29 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/11/22 18:08:39 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ int		get_next_line(int fd, char **line)
 	}
 	(*line) = ft_cut_end((*line));
 	tmp = ft_take_end(tmp, ret);
+	ret = (fd == 0 ? 1 : ret);
 	return (ret >= 1 ? 1 : 0);
 }

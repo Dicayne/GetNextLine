@@ -6,7 +6,7 @@
 /*   By: vmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:13 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/22 11:15:52 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/11/22 18:08:24 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,22 @@ char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*join;
 	int		len;
-	int		i;
+	int		len2;
 	int		j;
+	int		i;
 
 	i = 0;
 	j = 0;
-	if (s1 == NULL || s2 == NULL)
+	len = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	if (!(join = malloc(sizeof(char) * (len + len2 + 1))))
 		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	if (!(join = malloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	while (s1[i] != '\0')
+	while (i < len)
 	{
 		join[i] = s1[i];
 		i++;
 	}
-	while (s2[j] != '\0')
+	while (j < len2)
 	{
 		join[i] = s2[j];
 		i++;
@@ -78,6 +78,7 @@ char	*ft_take_end(char *str, int ret)
 		}
 		end_str[len] = '\0';
 	}
+	free(str);
 	return (end_str);
 }
 
@@ -101,5 +102,6 @@ char	*ft_cut_end(char *str)
 		}
 		tmp[i] = '\0';
 	}
+	free(str);
 	return (tmp);
 }
