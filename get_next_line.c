@@ -6,7 +6,7 @@
 /*   By: vmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:19 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/21 19:37:28 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/11/22 11:47:10 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,23 @@ int		get_next_line(int fd, char **line)
 
 	if (tmp != NULL)
 	{
+		(*line) = ft_cut_end(tmp);
 		if (stop_read(tmp) == 1)
 		{
-			(*line) = ft_cut_end(tmp);
 			tmp = ft_take_end(tmp, ret);
 			return (1);
 		}
-		(*line) = ft_cut_end(tmp);
 	}
 	ret = (tmp == NULL) ? 1 : ret;
-	tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (tmp == NULL)
-		return (-1);
 	while (stop_read(tmp) == 0 && ret > 0)
 	{
+		if (!(tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+			return (-1);
 		ret = read(fd, tmp, BUFFER_SIZE);
 		tmp[BUFFER_SIZE] = '\0';
 		(*line) = ft_strjoin((*line), tmp);
 	}
 	(*line) = ft_cut_end((*line));
 	tmp = ft_take_end(tmp, ret);
-	return (ret);
+	return (ret > 1 ? 1 : 0);
 }
