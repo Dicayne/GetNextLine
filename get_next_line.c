@@ -6,7 +6,7 @@
 /*   By: vmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:19 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/22 18:08:39 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/11/25 18:54:19 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,31 @@ int		stop_read(char *str)
 		return (0);
 }
 
-int		get_next_line(int fd, char **line)
+int		check_tmp(char **line, char **tmp, int ret)
 {
-	static char	*tmp;
-	static int	ret;
-
-	if (tmp != NULL)
+	if ((*tmp) != NULL)
 	{
-		(*line) = ft_cut_end(tmp);
-		if (stop_read(tmp) == 1)
+		(*line) = ft_cut_end((*tmp));
+		if (stop_read((*tmp)) == 1)
 		{
-			tmp = ft_take_end(tmp, ret);
+			(*tmp) = ft_take_end((*tmp), ret);
 			return (1);
 		}
 	}
-	ret = (tmp == NULL) ? 1 : ret;
+	return (0);
+}
+
+int		get_next_line(int fd, char **line)
+{
+	static char	*tmp;
+	int			ret;
+
+	(*line) = NULL;
+	if (fd == -1)
+		return (-1);
+	ret = 1;
+	if (check_tmp(line, &tmp, ret) == 1)
+		return (1);
 	while (stop_read(tmp) == 0 && ret > 0)
 	{
 		if (!(tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
@@ -52,6 +62,7 @@ int		get_next_line(int fd, char **line)
 	}
 	(*line) = ft_cut_end((*line));
 	tmp = ft_take_end(tmp, ret);
-	ret = (fd == 0 ? 1 : ret);
+	if (ret != 0)
+		ret = (fd == 0 ? 1 : ret);
 	return (ret >= 1 ? 1 : 0);
 }

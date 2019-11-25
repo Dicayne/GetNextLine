@@ -6,11 +6,11 @@
 /*   By: vmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 17:00:43 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/22 18:30:35 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/11/25 19:14:52 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../GetNextLine/get_next_line.h"
+#include "get_next_line.h"
 
 int		main(void)
 {
@@ -22,20 +22,28 @@ int		main(void)
 	ret = 1;
 	fd = open("test.txt", O_RDONLY);
 	ret = get_next_line(fd, &str);
+	// printf("%s\n", str);
+	//ret = get_next_line(fd, &str);
+	//printf("%s\n", str);
 	// while (ret > 0)
 	// {
 	// 	ret = get_next_line(fd, &str);
-	// 	//printf("%s\n", str);
+	// 	printf("%s\n", str);
+	// 	free(str);
 	// }
-	while (1)
-		;
 	return (0);
 }
 
 // int main()
 // {
-// 	char *line;
-// 	 get_next_line(0,&line);
-// 		printf("%s\n",line);
+// 	char	*line;
+// 	int		ret;
+
+// 	ret = 1;
+// 	while (ret > 0)
+// 	{
+// 		ret = get_next_line(0, &line);
+// 		printf("%s\n", line);
+// 	}
 // 	return (0);
 // }
