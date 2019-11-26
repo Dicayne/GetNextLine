@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:25 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/25 17:35:06 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/11/26 10:15:11 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ char			*ft_strjoin(char *s1, char *s2);
 char			*ft_cut_end(char *str);
 char			*ft_take_end(char *str, int ret);
 int				stop_read(char *str);
+char			*ft_strdup(char *str);
 #endif

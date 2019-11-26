@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:13 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/25 18:50:37 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/11/26 10:15:24 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,26 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	join[i] = '\0';
 	return (join);
+}
+
+char	*ft_strdup(char *str)
+{
+	int		i;
+	char	*dup;
+
+	i = 0;
+	dup = NULL;
+	dup = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (dup != NULL)
+	{
+		while (str[i] != '\0')
+		{
+			dup[i] = str[i];
+			i++;
+		}
+		dup[i] = '\0';
+	}
+	return(dup);
 }
 
 char	*ft_take_end(char *str, int ret)

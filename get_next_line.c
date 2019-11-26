@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:19 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/25 18:54:19 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/11/26 10:21:00 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		stop_read(char *str)
 		return (0);
 }
 
-int		check_tmp(char **line, char **tmp, int ret)
+int		check_tmp(char **line, char **tmp, int ret, char **stock)
 {
 	if ((*tmp) != NULL)
 	{
@@ -37,6 +37,7 @@ int		check_tmp(char **line, char **tmp, int ret)
 			(*tmp) = ft_take_end((*tmp), ret);
 			return (1);
 		}
+		(*stock) = ft_strdup((*line));
 	}
 	return (0);
 }
@@ -44,25 +45,31 @@ int		check_tmp(char **line, char **tmp, int ret)
 int		get_next_line(int fd, char **line)
 {
 	static char	*tmp;
+	char		*stock;
 	int			ret;
 
 	(*line) = NULL;
+	stock = NULL;
 	if (fd == -1)
 		return (-1);
 	ret = 1;
-	if (check_tmp(line, &tmp, ret) == 1)
+	if (check_tmp(line, &tmp, ret, &stock) == 1)
 		return (1);
 	while (stop_read(tmp) == 0 && ret > 0)
 	{
 		if (!(tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 			return (-1);
 		ret = read(fd, tmp, BUFFER_SIZE);
-		tmp[BUFFER_SIZE] = '\0';
-		(*line) = ft_strjoin((*line), tmp);
+		tmp[ret + 1] = '\0';
+		stock = ft_strjoin(stock, tmp);
 	}
-	(*line) = ft_cut_end((*line));
-	tmp = ft_take_end(tmp, ret);
-	if (ret != 0)
+	if (ret > 0)
+	{
+		(*line) = ft_cut_end(stock);
+		tmp = ft_take_end(tmp, ret);
 		ret = (fd == 0 ? 1 : ret);
+	}
+	else
+		free(tmp);
 	return (ret >= 1 ? 1 : 0);
 }
