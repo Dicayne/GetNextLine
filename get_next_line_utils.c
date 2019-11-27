@@ -6,7 +6,7 @@
 /*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:13 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/26 10:15:24 by victor           ###   ########.fr       */
+/*   Updated: 2019/11/27 11:25:50 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*ft_take_end(char *str, int ret)
 
 	i = 0;
 	if (ret == 0)
-		return (NULL);
+		ret = 0;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
 	i++;

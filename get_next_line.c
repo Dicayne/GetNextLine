@@ -6,7 +6,7 @@
 /*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:19 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/26 10:21:00 by victor           ###   ########.fr       */
+/*   Updated: 2019/11/27 16:47:21 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@ int		stop_read(char *str)
 		return (1);
 	else
 		return (0);
+}
+
+void	ft_strwork(char **line, char **tmp, int ret, char **stock)
+{
+	if (ret > 0)
+	{
+		(*line) = ft_cut_end((*stock));
+		(*tmp) = ft_take_end((*tmp), ret);
+		free((*stock));
+	}
+	else
+	{
+		(*line) = ft_strdup((*stock));
+		free((*tmp));
+		free((*stock));
+	}
 }
 
 int		check_tmp(char **line, char **tmp, int ret, char **stock)
@@ -48,7 +64,6 @@ int		get_next_line(int fd, char **line)
 	char		*stock;
 	int			ret;
 
-	(*line) = NULL;
 	stock = NULL;
 	if (fd == -1)
 		return (-1);
@@ -57,19 +72,17 @@ int		get_next_line(int fd, char **line)
 		return (1);
 	while (stop_read(tmp) == 0 && ret > 0)
 	{
-		if (!(tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+		if(!(tmp = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 			return (-1);
 		ret = read(fd, tmp, BUFFER_SIZE);
-		tmp[ret + 1] = '\0';
+		printf("%d\n", ret);
+		tmp[ret] = '\0';
 		stock = ft_strjoin(stock, tmp);
 	}
-	if (ret > 0)
-	{
-		(*line) = ft_cut_end(stock);
-		tmp = ft_take_end(tmp, ret);
-		ret = (fd == 0 ? 1 : ret);
-	}
-	else
-		free(tmp);
+	ft_strwork(line, &tmp, ret, &stock);
+	if (ret == -1)
+		return (-1);
+	if (fd == 0)
+		return (1);
 	return (ret >= 1 ? 1 : 0);
 }
