@@ -6,7 +6,7 @@
 /*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 17:00:43 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/27 16:55:39 by victor           ###   ########.fr       */
+/*   Updated: 2019/11/27 17:17:14 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		main(void)
 	// printf("%s\n", str);
 	while (ret > 0)
 	{
-		ret = get_next_line(fd, &str);
+		ret = get_next_line(4242, &str);
 		printf("%d=\"%s\"\n",round, str);
 		round++;
 		free(str);

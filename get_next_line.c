@@ -6,7 +6,7 @@
 /*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:19 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/27 16:47:21 by victor           ###   ########.fr       */
+/*   Updated: 2019/11/27 17:27:31 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int		get_next_line(int fd, char **line)
 	int			ret;
 
 	stock = NULL;
-	if (fd == -1)
-		return (-1);
 	ret = 1;
 	if (check_tmp(line, &tmp, ret, &stock) == 1)
 		return (1);
@@ -75,7 +73,6 @@ int		get_next_line(int fd, char **line)
 		if(!(tmp = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 			return (-1);
 		ret = read(fd, tmp, BUFFER_SIZE);
-		printf("%d\n", ret);
 		tmp[ret] = '\0';
 		stock = ft_strjoin(stock, tmp);
 	}
