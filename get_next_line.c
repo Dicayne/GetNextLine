@@ -6,7 +6,7 @@
 /*   By: vmoreau <vmoreau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:19 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/12/03 18:48:08 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/12/03 19:03:25 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ int		check_tmp(char **line, char *tmp, char **stock)
 		tmp = ft_take_end(tmp);
 		return (1);
 	}
-	else if (tmp != NULL)
-		(*stock) = ft_strdup(tmp);
+	(*stock) = ft_strdup(tmp);
 	return (0);
 }
 
