@@ -6,7 +6,7 @@
 /*   By: vmoreau <vmoreau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:13 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/12/03 10:29:36 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/12/03 18:47:21 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	join[i] = '\0';
-	ft_free(&s1, 1);
+	ft_free(&s1);
 	return (join);
 }
 
@@ -58,7 +58,6 @@ char	*ft_strdup(char *str)
 	char	*dup;
 
 	i = 0;
-	dup = NULL;
 	dup = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (dup != NULL)
 	{

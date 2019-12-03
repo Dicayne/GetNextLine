@@ -6,7 +6,7 @@
 /*   By: vmoreau <vmoreau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:19 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/12/03 10:30:24 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/12/03 18:48:08 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,43 +27,38 @@ int		stop_read(char *str)
 		return (0);
 }
 
-void	ft_strwork(char **line, char tmp[BUFFER_SIZE + 1], int ret, char **stok)
+void	ft_strwork(char **line, char *tmp, int ret, char **stock)
 {
 	if (ret > 0)
 	{
-		(*line) = ft_cut_end((*stok));
+		(*line) = ft_cut_end((*stock));
 		tmp = ft_take_end(tmp);
-		free((*stok));
+		free((*stock));
 	}
 	else
 	{
-		(*line) = ft_strdup((*stok));
-		free((*stok));
+		(*line) = ft_strdup((*stock));
+		free((*stock));
 	}
 }
 
-int		check_tmp(char **line, char tmp[BUFFER_SIZE + 1], char **stock)
+int		check_tmp(char **line, char *tmp, char **stock)
 {
-	if (tmp != NULL)
+	if (stop_read(tmp) == 1)
 	{
-		if (stop_read(tmp) == 1)
-		{
-			(*line) = ft_cut_end(tmp);
-			tmp = ft_take_end(tmp);
-			return (1);
-		}
-		(*stock) = ft_strdup(tmp);
+		(*line) = ft_cut_end(tmp);
+		tmp = ft_take_end(tmp);
+		return (1);
 	}
+	else if (tmp != NULL)
+		(*stock) = ft_strdup(tmp);
 	return (0);
 }
 
-void	ft_free(char **str, int mem)
+void	ft_free(char **str)
 {
-	if ((stop_read((*str)) == 0 || mem == 1))
-	{
-		free((*str));
-		(*str) = NULL;
-	}
+	free((*str));
+	(*str) = NULL;
 }
 
 int		get_next_line(int fd, char **line)
@@ -74,6 +69,8 @@ int		get_next_line(int fd, char **line)
 
 	stock = NULL;
 	ret = 1;
+	if (BUFFER_SIZE <= 0)
+		return (-1);
 	if (check_tmp(line, tmp, &stock) == 1)
 		return (1);
 	while (stop_read(tmp) == 0 && ret > 0)
@@ -84,7 +81,5 @@ int		get_next_line(int fd, char **line)
 		stock = ft_strjoin(stock, tmp);
 	}
 	ft_strwork(line, tmp, ret, &stock);
-	if (fd == 0)
-		return (1);
 	return (ret >= 1 ? 1 : ret);
 }

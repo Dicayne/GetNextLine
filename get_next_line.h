@@ -6,7 +6,7 @@
 /*   By: vmoreau <vmoreau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:25 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/12/03 10:23:32 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/12/03 18:48:35 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ char			*ft_cut_end(char *str);
 char			*ft_take_end(char *str);
 int				stop_read(char *str);
 char			*ft_strdup(char *str);
-void			ft_free(char **str, int mem);
+void			ft_free(char **str);
 #endif
