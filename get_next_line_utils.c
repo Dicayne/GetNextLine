@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmoreau <vmoreau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:13 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/27 11:25:50 by victor           ###   ########.fr       */
+/*   Updated: 2019/12/03 10:29:36 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	join[i] = '\0';
+	ft_free(&s1, 1);
 	return (join);
 }
 
@@ -68,35 +69,27 @@ char	*ft_strdup(char *str)
 		}
 		dup[i] = '\0';
 	}
-	return(dup);
+	return (dup);
 }
 
-char	*ft_take_end(char *str, int ret)
+char	*ft_take_end(char *str)
 {
-	int		len;
 	int		i;
-	char	*end_str;
+	int		j;
 
 	i = 0;
-	if (ret == 0)
-		ret = 0;
+	j = 0;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
 	i++;
-	len = ft_strlen(str + i);
-	end_str = (char *)malloc(sizeof(char) * (len + 1));
-	if (end_str != NULL)
+	while (str[i] != '\0')
 	{
-		len = 0;
-		while (str[i] != '\0')
-		{
-			end_str[len] = str[i];
-			len++;
-			i++;
-		}
-		end_str[len] = '\0';
+		str[j] = str[i];
+		i++;
+		j++;
 	}
-	return (end_str);
+	str[j] = '\0';
+	return (str);
 }
 
 char	*ft_cut_end(char *str)
@@ -107,14 +100,12 @@ char	*ft_cut_end(char *str)
 
 	len = 0;
 	i = 0;
-	if (stop_read(str) == 0)
-		return (str);
 	while (str[len] != '\n' && str[len] != '\0')
 		len++;
 	tmp = (char *)malloc(sizeof(char) * (len + 1));
 	if (tmp != NULL)
 	{
-		while (i < len)
+		while (i < len && str[i] != '\0')
 		{
 			tmp[i] = str[i];
 			i++;

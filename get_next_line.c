@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmoreau <vmoreau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:19 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/11/27 23:48:19 by victor           ###   ########.fr       */
+/*   Updated: 2019/12/03 10:30:24 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,64 +27,64 @@ int		stop_read(char *str)
 		return (0);
 }
 
-void	ft_strwork(char **line, char **tmp, int ret, char **stock)
+void	ft_strwork(char **line, char tmp[BUFFER_SIZE + 1], int ret, char **stok)
 {
 	if (ret > 0)
 	{
-		(*line) = ft_cut_end((*stock));
-		(*tmp) = ft_take_end((*tmp), ret);
-		free((*stock));
+		(*line) = ft_cut_end((*stok));
+		tmp = ft_take_end(tmp);
+		free((*stok));
 	}
 	else
 	{
-		(*line) = ft_strdup((*stock));
-		free((*tmp));
-		free((*stock));
+		(*line) = ft_strdup((*stok));
+		free((*stok));
 	}
 }
 
-int		check_tmp(char **line, char **tmp, int ret, char **stock)
+int		check_tmp(char **line, char tmp[BUFFER_SIZE + 1], char **stock)
 {
-	if ((*tmp) != NULL)
+	if (tmp != NULL)
 	{
-		(*line) = ft_cut_end((*tmp));
-		if (stop_read((*tmp)) == 1)
+		if (stop_read(tmp) == 1)
 		{
-			(*tmp) = ft_take_end((*tmp), ret);
+			(*line) = ft_cut_end(tmp);
+			tmp = ft_take_end(tmp);
 			return (1);
 		}
-		(*stock) = ft_strdup((*line));
+		(*stock) = ft_strdup(tmp);
 	}
 	return (0);
 }
 
+void	ft_free(char **str, int mem)
+{
+	if ((stop_read((*str)) == 0 || mem == 1))
+	{
+		free((*str));
+		(*str) = NULL;
+	}
+}
+
 int		get_next_line(int fd, char **line)
 {
-	static char	*tmp;
+	static char	tmp[BUFFER_SIZE + 1];
 	char		*stock;
 	int			ret;
 
 	stock = NULL;
 	ret = 1;
-	if (check_tmp(line, &tmp, ret, &stock) == 1)
+	if (check_tmp(line, tmp, &stock) == 1)
 		return (1);
-
 	while (stop_read(tmp) == 0 && ret > 0)
 	{
-		if(!(tmp = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-			return (-1);
-		if((ret = read(fd, tmp, BUFFER_SIZE)) == -1)
-		{
-			free(tmp);
-			return (-1);
-		}
+		if ((ret = read(fd, tmp, BUFFER_SIZE)) == -1)
+			break ;
 		tmp[ret] = '\0';
 		stock = ft_strjoin(stock, tmp);
 	}
-	ft_strwork(line, &tmp, ret, &stock);
-	if (ret == -1)
-		return (-1);
+	ft_strwork(line, tmp, ret, &stock);
 	if (fd == 0)
 		return (1);
-	return (ret >= 1 ? 1 : 0);
+	return (ret >= 1 ? 1 : ret);
 }
