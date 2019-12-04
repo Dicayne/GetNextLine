@@ -6,7 +6,7 @@
 /*   By: vmoreau <vmoreau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:22:19 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/12/03 19:03:25 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/12/04 17:16:23 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,6 @@ int		check_tmp(char **line, char *tmp, char **stock)
 	return (0);
 }
 
-void	ft_free(char **str)
-{
-	free((*str));
-	(*str) = NULL;
-}
-
 int		get_next_line(int fd, char **line)
 {
 	static char	tmp[BUFFER_SIZE + 1];
@@ -68,7 +62,7 @@ int		get_next_line(int fd, char **line)
 
 	stock = NULL;
 	ret = 1;
-	if (BUFFER_SIZE <= 0)
+	if (BUFFER_SIZE <= 0 || line == NULL)
 		return (-1);
 	if (check_tmp(line, tmp, &stock) == 1)
 		return (1);
@@ -79,6 +73,6 @@ int		get_next_line(int fd, char **line)
 		tmp[ret] = '\0';
 		stock = ft_strjoin(stock, tmp);
 	}
-	ft_strwork(line, tmp, ret, &stock);
+	ret == -1 ? free(stock) : ft_strwork(line, tmp, ret, &stock);
 	return (ret >= 1 ? 1 : ret);
 }

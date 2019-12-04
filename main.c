@@ -6,7 +6,7 @@
 /*   By: vmoreau <vmoreau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 17:00:43 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/12/03 19:31:28 by vmoreau          ###   ########.fr       */
+/*   Updated: 2019/12/04 17:14:52 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int		main(void)
 	while (ret > 0)
 	{
 		ret = get_next_line(fd, &str);
-		printf("%s\n", str);
+		if (ret != -1)
+			//printf("%s\n", str);
 		free(str);
 	}
 	return (0);
