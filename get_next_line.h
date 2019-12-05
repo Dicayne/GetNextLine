@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmoreau <vmoreau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/19 17:00:43 by vmoreau           #+#    #+#             */
-/*   Updated: 2019/12/05 10:10:01 by vmoreau          ###   ########.fr       */
+/*   Created: 2019/11/18 14:22:25 by vmoreau           #+#    #+#             */
+/*   Updated: 2019/12/03 18:48:35 by vmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
 
-int		main(void)
-{
-	int		fd;
-	char	*str;
-	int		ret;
-
-	str = NULL;
-	ret = 1;
-	fd = open("test.txt", O_RDONLY);
-	while (ret > 0)
-	{
-		ret = get_next_line(fd, &str);
-		if (ret != -1)
-			printf("%s\n", str);
-		free(str);
-	}
-	return (0);
-}
+/*
+**PROTOTYPE
+*/
+int				get_next_line(int fd, char **line);
+char			*ft_strjoin(char *s1, char *s2);
+char			*ft_cut_end(char *str);
+char			*ft_take_end(char *str);
+int				stop_read(char *str);
+char			*ft_strdup(char *str);
+void			ft_free(char **str);
+#endif
